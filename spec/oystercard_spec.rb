@@ -14,4 +14,9 @@ describe Oystercard do
         subject.top_up(max_value)
         expect{subject.top_up 1}.to raise_error 'Max value of #{max_value} exceeded'
     end
+
+    it 'deducts the fare' do
+        subject.top_up(20)
+        expect(subject.deduct(2)).to eq(18)
+    end
 end
