@@ -19,4 +19,18 @@ describe Oystercard do
         subject.top_up(20)
         expect(subject.deduct(2)).to eq(18)
     end
+
+    it 'is not in journey when new' do
+        expect(subject).not_to be_in_journey
+    end
+
+    it ' starts a journey' do
+        subject.touch_in
+        expect(subject).to be_in_journey
+    end
+    it 'ends a journey' do
+        #subject.touch_in
+        subject.touch_out
+        expect(subject).not_to be_in_journey
+    end
 end
