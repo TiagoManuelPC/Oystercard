@@ -25,6 +25,7 @@ describe Oystercard do
     end
 
     it ' starts a journey' do
+        subject.top_up(10)
         subject.touch_in
         expect(subject).to be_in_journey
     end
@@ -33,4 +34,11 @@ describe Oystercard do
         subject.touch_out
         expect(subject).not_to be_in_journey
     end
+    it 'touch in<1 to raise error' do
+        min_value = Oystercard::MINVALUE 
+        subject.balance < min_value
+
+        expect{subject.touch_in}.to raise_error 'insuf. founds'
+    end
+
 end
