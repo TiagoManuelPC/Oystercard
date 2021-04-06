@@ -9,4 +9,9 @@ describe Oystercard do
     it 'can be top up' do
         expect(subject.top_up(10)).to eq(10)
     end
+    it 'over 90 raises an error' do
+        max_value = Oystercard::MAXVALUE
+        subject.top_up(max_value)
+        expect{subject.top_up 1}.to raise_error 'Max value of #{max_value} exceeded'
+    end
 end
