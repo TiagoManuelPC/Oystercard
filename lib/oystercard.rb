@@ -47,4 +47,5 @@ class Oystercard
        (@balance + value) > MAXVALUE
     end
 
-end
+end 
+####
