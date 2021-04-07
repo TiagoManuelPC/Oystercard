@@ -1,10 +1,11 @@
 class Oystercard
     MAXVALUE = 90
     MINVALUE = 1
-    attr_reader :balance, :station
+    attr_reader :balance, :entry_station, :journeys, :exit_station
     def initialize
         @balance = 0
-        @station = nil
+        @entry_station = nil
+        @journeys = []
     end
 
     def top_up(value)
@@ -14,16 +15,22 @@ class Oystercard
 
     def touch_in(station)
         raise 'insuf. founds' if min_val?
-        @station = station
+        @entry_station = station
     end
 
-    def touch_out
+    def touch_out(station)
         deduct(MINVALUE)
-        @station = nil
+        @exit_station = station
+        log_journey
+        @entry_station = nil
+    end
+
+    def log_journey
+        journeys << {entry_station: entry_station, exit_station: exit_station}
     end
 
     def in_journey?
-        !!station
+        !!entry_station
     end
 
     private
