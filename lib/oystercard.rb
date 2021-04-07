@@ -8,7 +8,7 @@ class Oystercard
     end
 
     def top_up(value)
-       raise 'Max value of #{max_value} exceeded' if  @balance + value > MAXVALUE
+       raise 'Max value of #{max_value} exceeded' if  max_value(value)
        @balance += value
     end
 
@@ -16,7 +16,7 @@ class Oystercard
       @balance -= amount
     end
     def touch_in
-        raise 'insuf. founds' if @balance  < MINVALUE
+        raise 'insuf. founds' if min_val?
         @in_journey = true
     end
     def touch_out
@@ -29,10 +29,14 @@ class Oystercard
         @in_journey
     end
 
+    def min_val?
+        @balance < MINVALUE
+    end
 
 
 
-    #def max_value
-     #   @balance + value > MAXVALUE
-    #end
+
+   def max_value(value)
+       (@balance + value) > MAXVALUE
+    end
 end

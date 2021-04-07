@@ -1,44 +1,45 @@
 
 require 'oystercard'
 describe Oystercard do
+    subject(:card) { described_class.new }
 
     it 'has a balance' do
-        expect(subject.balance).to eq(0)   
+        expect(card.balance).to eq(0)   
     end
 
     it 'can be top up' do
-        expect(subject.top_up(10)).to eq(10)
+        expect(card.top_up(10)).to eq(10)
     end
     it 'over 90 raises an error' do
         max_value = Oystercard::MAXVALUE
-        subject.top_up(max_value)
-        expect{subject.top_up 1}.to raise_error 'Max value of #{max_value} exceeded'
+        card.top_up(max_value)
+        expect{card.top_up 1}.to raise_error 'Max value of #{max_value} exceeded'
     end
 
     it 'deducts the fare' do
-        subject.top_up(20)
-        expect(subject.deduct(2)).to eq(18)
+        card.top_up(20)
+        expect(card.deduct(2)).to eq(18)
     end
-
+describe' card travel' do 
     it 'is not in journey when new' do
-        expect(subject).not_to be_in_journey
+        expect(card).not_to be_in_journey
     end
 
     it ' starts a journey' do
-        subject.top_up(10)
-        subject.touch_in
-        expect(subject).to be_in_journey
+        card.top_up(10)
+        card.touch_in
+        expect(card).to be_in_journey
     end
     it 'ends a journey' do
         #subject.touch_in
-        subject.touch_out
-        expect(subject).not_to be_in_journey
+        card.touch_out
+        expect(card).not_to be_in_journey
     end
     it 'touch in<1 to raise error' do
         min_value = Oystercard::MINVALUE 
-        subject.balance < min_value
-
-        expect{subject.touch_in}.to raise_error 'insuf. founds'
+        card.balance < min_value
+        expect{card.touch_in}.to raise_error 'insuf. founds'
     end
+end
 
 end
