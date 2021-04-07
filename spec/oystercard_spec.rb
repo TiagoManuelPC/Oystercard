@@ -40,6 +40,10 @@ describe' card travel' do
         card.balance < min_value
         expect{card.touch_in}.to raise_error 'insuf. founds'
     end
+
+    it 'charges when touch out' do
+        expect{card.touch_out}.to change{card.balance}.by(-Oystercard::MINVALUE)
+    end
 end
 
 end
